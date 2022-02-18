@@ -1,9 +1,10 @@
 import React from 'react';
+import axios from 'axios';
 import './App.css';
 import StockEventsTable from './components/StockEventsTable';
 
-//2 data types
 
+//2 data types
 // Product
 const fetchedProducts = [
   {id: 1, name: "product", thumbnail: "https://www.nicepng.com/png/detail/443-4431327_png-file-fa-fa-product-icon.png"},
@@ -24,23 +25,52 @@ const fetchedStockEvents = [
   {id: 9, type: 'add', qty: 50, product: fetchedProducts[2]},
 ];
 
+
 //fetch all stock events
 
 //separate by different products
 
 //Display them
+class App extends React.Component{
+  state = {
+    fetchedProducts,
+    fetchedStockEvents
+  }
 
+  async componentDidMount(){
+    
+    const productsRes = await axios({
+      method: 'GET',
+      url: 'http://localhost:1337/api/products'
+    })
 
+    const stockEventsRes = await axios({
+      method: 'GET',
+      url: 'http://localhost:1337/api/stockevents'
+    })
 
-function App() {
-  return (
-    <div className="App">
+    console.log('stockEventsRes', stockEventsRes.data)
+    console.log('productsRes', productsRes.data)
+
+    const fetchedProducts = productsRes.data
+    const fetchedStockEvents = stockEventsRes.data
+
+    this.setState({fetchedProducts,fetchedStockEvents})
+  }
+
+  render(){
+    const {fetchedProducts,fetchedStockEvents} = this.state
+
+    return (
+      <div className="App">
+        <h1>Inventory v1 work in progress</h1>
         <StockEventsTable 
           products={fetchedProducts}
-          stockEvents={fetchedStockEvents}  
+          stockEvents={fetchedStockEvents}
         />
-    </div>
-  )
-};
+      </div>
+    )
+  }
+}
 
 export default App;
