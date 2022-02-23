@@ -16,9 +16,9 @@ class StockDetail extends React.Component{
                         {stockEvents.map(event =>(
                             <div className="StockEventsTable_Card">
                                 <p>ID: {event.id}</p>
-                                <p>TYPE: {event.type}</p>
-                                <p>QUANTITY: {event.qty}</p>
-                                <p>PRODUCT NAME: {event.product.name}</p>
+                                <p>TYPE: {event.attributes.type}</p>
+                                <p>QUANTITY: {event.attributes.qty}</p>
+                                <p>PRODUCT NAME: {event.attributes.product.data.attributes.name}</p>
                             </div>
                         ))}
                     </div>
