@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  inventory-frontend:
+    build: .
+    container_name: inventory-frontend
+    environment:
+      REACT_APP_SERVER_URL: ${REACT_APP_SERVER_URL:-http://localhost:1337}
+    stdin_open: true
+    ports:
+     - 3000:3000
