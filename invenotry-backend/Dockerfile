@@ -14,9 +14,9 @@ RUN yarn
 
 ### - Copy required directories/files - ###
 COPY public/robots.txt public/robots.txt
-COPY extensions/ extensions/
+COPY src/extensions/ src/extensions/
 COPY config/ config/
-COPY api/ api/
+COPY src/api/ src/api/
 
 ### - Production build - ###
 RUN yarn build

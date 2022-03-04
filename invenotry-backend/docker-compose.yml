@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  strapi-app:
+  invenotry-backend:
     build: .
-    container_name: strapi-app_inventory
+    container_name: invenotry-backend
     environment:
       # SQLite database file path
       DATABASE_FILENAME: .tmp/data.db
