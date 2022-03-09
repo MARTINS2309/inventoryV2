@@ -1,31 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-class StockDetail extends React.Component{
-    state={
-        show: false
-    }
+export const StockDetail = ({name, total, stockEvents}) => {
+    const [show, setShow] = useState(false);
 
-    render(){
-        const {name, total, stockEvents} = this.props
-        const {show} = this.state
-        return(
-            <div className="StockDetail" onClick={() => this.setState({show: !show})}>
-                <h2>Product: {name} | Total: {total}</h2>
-                {show &&
-                    <div>
-                        {stockEvents.map(event =>(
-                            <div className="StockEventsTable_Card">
-                                <p>ID: {event.id}</p>
-                                <p>TYPE: {event.attributes.type}</p>
-                                <p>QUANTITY: {event.attributes.qty}</p>
-                                <p>PRODUCT NAME: {event.attributes.product.data.attributes.name}</p>
-                            </div>
-                        ))}
-                    </div>
-                }
-            </div>
-        )
-    }
+    const listStockEvents = stockEvents.map(stockEvent => (
+        <div 
+            className="StockEventsTable_Card"
+            key={'s'+stockEvent.id}
+        >
+            <p>ID: {stockEvent.id}</p>
+            <p>TYPE: {stockEvent.attributes.type}</p>
+            <p>QUANTITY: {stockEvent.attributes.qty}</p>
+            <p>TIMESTAMP: {stockEvent.attributes.publishedAt}</p>
+        </div>
+    ))
+
+    return (
+        <div className="StockDetail" onClick={() => setShow(!show)}>
+            <h2>Product: {name} | Total: {total}</h2>
+            {show &&
+                <div>
+                    {listStockEvents}
+                </div>
+            }
+        </div>
+    );
 }
-
-export default StockDetail
