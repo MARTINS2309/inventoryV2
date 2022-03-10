@@ -1,10 +1,11 @@
 import React from 'react'
 import {StockDetail} from './StockDetail'
 
+//Main function of this component is to split up the products array and extract relavant stockEvents from all stockEvents then pass the product and its stockEvents to StockDetails component repeat this for all products
 export const StockEventsTable = ({products, stockEvents}) => {
    
     return (
-        <div className="StockEventTable">
+        <div className="StockEventTable" data-testid= "s-e-t">
             {(products ?? []).map(product => {
                 const {id} = product
 
@@ -15,7 +16,7 @@ export const StockEventsTable = ({products, stockEvents}) => {
                 }, 0)
 
                 return (
-                    <div className="StockEventTable_ProductsContainer" key={'p'+id}>
+                    <div className="StockEventTable_Container" data-testid= "s-e-t-container" key={'p'+id}>
                         <StockDetail 
                             name={product.attributes.name} 
                             total={stockTotal} 

@@ -3,6 +3,7 @@
 This project is about an inventory management system.
 
 To start project:
+
 cd to inventory-backend then run yarn develop
 
 cd to inventory-frontend run npm start
