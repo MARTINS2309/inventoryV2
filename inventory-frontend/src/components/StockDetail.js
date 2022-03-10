@@ -30,7 +30,7 @@ export const StockDetail = ({name, total, stockEvents}) => {
             </div>
             
             {show &&
-                <div className="StockDetail_Body">
+                <div className="StockDetail_Body" data-testid="stock-detail-body">
                     {listStockEvents}
                 </div>
             }

@@ -39,31 +39,41 @@ describe("StockDetail", ()=>{
 
         expect(queryByTestId('stock-detail')).toBeTruthy()
     })
-    it("does not render StockDetail_Card by default", ()=>{
+    it("does not render StockDetail_Body by default", ()=>{
         const{queryByTestId} = render(<StockDetail name ={name} total={total} stockEvents={stockEvents} />)
 
-        expect(queryByTestId('stock-detail-card')).toBeNull()
+        expect(queryByTestId('stock-detail-body')).toBeNull()
     })
-    it("does render StockDetail_Card after clicking its heading", ()=>{
+    it("does render StockDetail_Body after clicking StockDetail_Heading", ()=>{
         const{queryByTestId, getByTestId} = render(<StockDetail name ={name} total={total} stockEvents={stockEvents} />)
 
-        expect(queryByTestId('stock-detail-card')).toBeNull()
+        expect(queryByTestId('stock-detail-body')).toBeNull()
 
         fireEvent.click(getByTestId('stock-detail-heading'))
 
-        expect(queryByTestId('stock-detail-card')).toBeTruthy()
+        expect(queryByTestId('stock-detail-body')).toBeTruthy()
     })
 
-    it("displays correct information from stockEvents prop", () =>{
+    it("does not render StockDetail_Card if no stockEvents prop is passed", () =>{
+        const{queryByTestId, getByTestId} = render(<StockDetail name ={name} total={total}  />)
+        
+        expect(queryByTestId('stock-detail-body')).toBeNull()
+        fireEvent.click(getByTestId('stock-detail-heading'))
+        expect(queryByTestId('stock-detail-body')).not.toBeNull()
+        
+        expect(queryByTestId('stock-detail-card')).toBeNull()
+    })
+
+    it("does render StockDetail_Card with information from stockEvents prop", () =>{
         const{queryByTestId, getByTestId} = render(<StockDetail name ={name} total={total} stockEvents={stockEvents} />)
         
         expect(queryByTestId('stock-detail-card')).toBeNull()
         fireEvent.click(getByTestId('stock-detail-heading'))
         expect(queryByTestId('stock-detail-card')).toBeTruthy()
 
-        expect(getByTestId('p-id').textContent).toMatch('ID: 1')
-        expect(getByTestId('p-type').textContent).toMatch('TYPE: add')
-        expect(getByTestId('p-qty').textContent).toMatch('QUANTITY: 1')
-        expect(getByTestId('p-time').textContent).toMatch('TIMESTAMP: 2022-02-18T10:59:23.929Z')
+        expect(getByTestId('p-id').textContent).toMatch('ID: '+stockEvents[0].id)
+        expect(getByTestId('p-type').textContent).toMatch('TYPE: '+stockEvents[0].attributes.type)
+        expect(getByTestId('p-qty').textContent).toMatch('QUANTITY: '+stockEvents[0].attributes.qty)
+        expect(getByTestId('p-time').textContent).toMatch('TIMESTAMP: '+stockEvents[0].attributes.publishedAt)
     })
 })
