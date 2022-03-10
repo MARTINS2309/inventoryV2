@@ -117,18 +117,24 @@ export const App = () => {
 
   useEffect(()=>{
     const fetchProducts = async () => {
-      const data = await fetch("http://localhost:1337/api/products")
-      const json = await data.json()
-      setFectechedProducts(json.data)
+      const productsRes =  await axios({
+        method: 'GET',
+        url: 'http://localhost:1337/api/products'
+      })
+      setFectechedProducts(productsRes.data.data)
     }
 
     const fetchStockEvents = async () => {
-      const data = await fetch("http://localhost:1337/api/stockevents")
-      const json = await data.json()
-      setFetchedStockEvents(json.data)
-      console.log('json.data', json.data)
+      const stockEventsRes = await axios({
+        method: 'GET',
+        url: 'http://localhost:1337/api/stockevents',
+        params: {
+          populate: '*'
+        },
+      })
+      setFetchedStockEvents(stockEventsRes.data.data)
     }
-
+    
     fetchProducts().catch(console.error)
     fetchStockEvents().catch(console.error)
   },[]);
