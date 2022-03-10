@@ -1,16 +1,21 @@
-//StockDetail has name,total
-//  -it displays Products name, and stock total
-//StockDetail has stockEvents array
-//  -it contains events objects
-//  -display events object contents in div StockEventsTable_Card
-//StockDetail can shown/hide stockEvents on click
+/**
+ * @jest-environment jsdom
+ */
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import {StockDetail} from "../src/components/StockDetail";
 
+describe("StockEventsTable_Card", ()=>{
 
-it("renders correctly", ()=>{
-    const{} = render(<StockDetail/>)
+    it("renders correctly", ()=>{
+        const{queryByPlaceholderText} = render(<StockDetail 
+                                                    name="Product" 
+                                                    total="1" 
+                                                    stockEvents = 
+                                                />)
+
+        expect(queryByPlaceholderText('StockEventsTable_Card')).toBeTruthy()
+    })
 })
 /*
 describe("StockEventsTable_Card", ()=>{
