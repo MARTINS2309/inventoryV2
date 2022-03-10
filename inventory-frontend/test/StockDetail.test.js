@@ -44,16 +44,26 @@ describe("StockDetail", ()=>{
 
         expect(queryByTestId('stock-detail-card')).toBeNull()
     })
-    it("does render StockDetail_Card after clicking it", ()=>{
+    it("does render StockDetail_Card after clicking its heading", ()=>{
         const{queryByTestId, getByTestId} = render(<StockDetail name ={name} total={total} stockEvents={stockEvents} />)
 
         expect(queryByTestId('stock-detail-card')).toBeNull()
 
-        fireEvent.click(getByTestId('stock-detail'))
+        fireEvent.click(getByTestId('stock-detail-heading'))
 
         expect(queryByTestId('stock-detail-card')).toBeTruthy()
     })
 
-    
+    it("displays correct information from stockEvents prop", () =>{
+        const{queryByTestId, getByTestId} = render(<StockDetail name ={name} total={total} stockEvents={stockEvents} />)
+        
+        expect(queryByTestId('stock-detail-card')).toBeNull()
+        fireEvent.click(getByTestId('stock-detail-heading'))
+        expect(queryByTestId('stock-detail-card')).toBeTruthy()
 
+        expect(getByTestId('p-id').textContent).toMatch('ID: 1')
+        expect(getByTestId('p-type').textContent).toMatch('TYPE: add')
+        expect(getByTestId('p-qty').textContent).toMatch('QUANTITY: 1')
+        expect(getByTestId('p-time').textContent).toMatch('TIMESTAMP: 2022-02-18T10:59:23.929Z')
+    })
 })
