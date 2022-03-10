@@ -115,21 +115,22 @@ export const App = () => {
     ]
   );
 
-  async function fetchData(apiURL) {
-    let response = await axios({
-      method: 'GET',
-      url: apiURL,
-      params: {
-        populate: '*'
-      }
-    })
-    return await response.data.data
-  }
-
   useEffect(()=>{
-    setFectechedProducts(fetchData("http://localhost:1337/api/products"))
-    setFetchedStockEvents(fetchData("http://localhost:1337/api/stockevents"))
-    console.log('fetchedProducts', fetchedProducts)
+    const fetchProducts = async () => {
+      const data = await fetch("http://localhost:1337/api/products")
+      const json = await data.json()
+      setFectechedProducts(json.data)
+    }
+
+    const fetchStockEvents = async () => {
+      const data = await fetch("http://localhost:1337/api/stockevents")
+      const json = await data.json()
+      setFetchedStockEvents(json.data)
+      console.log('json.data', json.data)
+    }
+
+    fetchProducts().catch(console.error)
+    fetchStockEvents().catch(console.error)
   },[]);
 
   return (
