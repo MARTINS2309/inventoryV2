@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 export const StockDetail = ({name, total, stockEvents}) => {
     const [show, setShow] = useState(false);
 
-    const listStockEvents = stockEvents.map(stockEvent => (
+    const listStockEvents = (stockEvents ?? []).map(stockEvent => (
         <div 
-            className="StockEventsTable_Card"
+            className="StockDetail_Card"
+            data-testid="stock-detail-card"
             key={'s'+stockEvent.id}
         >
             <p>ID: {stockEvent.id}</p>
@@ -16,7 +17,11 @@ export const StockDetail = ({name, total, stockEvents}) => {
     ))
 
     return (
-        <div className="StockDetail" onClick={() => setShow(!show)}>
+        <div 
+            className="StockDetail" 
+            data-testid="stock-detail" 
+            onClick={() => setShow(!show)}
+        >
             <h2>Product: {name} | Total: {total}</h2>
             {show &&
                 <div>
