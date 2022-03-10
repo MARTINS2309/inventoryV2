@@ -5,7 +5,7 @@ export const StockEventsTable = ({products, stockEvents}) => {
    
     return (
         <div className="StockEventTable">
-            {products.map(product => {
+            {(products ?? []).map(product => {
                 const {id} = product
 
                 const relevantStockEvents = stockEvents.filter(se => se.attributes.product.data.id === id)
