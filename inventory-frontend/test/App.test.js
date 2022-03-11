@@ -1,9 +1,25 @@
-
+/**
+* @jest-environment jsdom
+*/
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import ReactDOM from "react-dom";
+import { act } from 'react-dom/test-utils';
 import {App} from "../src/App";
 
-describe("App", () =>{
+let container
+
+beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
+
+afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+});
+
+describe('App', () =>{
     const products = [{
         id: 1,
         attributes:{
@@ -38,6 +54,15 @@ describe("App", () =>{
 
     const isSubscribed = true
 
+    it('renders correctly', () => {
+        act(() => {
+            ReactDOM.render(<App/>, container)
+        })
 
+        const heading = container.querySelector('h1')
+
+        expect(heading.textContent).toBe('Inventory v2')
+
+    })
 
 })
