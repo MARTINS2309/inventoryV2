@@ -73,11 +73,10 @@ export const App = () => {
       fetchStockEvents().catch(console.error)
       isSubscribed=false
     }
-    
   },[]);
 
   return (
-    <div className="App">
+    <div className="App" data-testid="app">
       <h1>Inventory v2</h1>
       <StockEventsTable 
         products={fetchedProducts}
