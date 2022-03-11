@@ -55,9 +55,9 @@ describe('App', () =>{
     const isSubscribed = true
 
     it('renders correctly', () => {
-        act(() => {
-            ReactDOM.render(<App/>, container)
-        })
+        
+            render(<App/>, container)
+        
 
         const heading = container.querySelector('h1')
 

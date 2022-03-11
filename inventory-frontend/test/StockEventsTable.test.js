@@ -52,7 +52,7 @@ describe("StockEventTable", ()=>{
         expect(queryByTestId('s-e-t-container')).toBeNull()
     })
 
-    it.skip("passes correct props to the child component", ()=>{
+    it("passes correct props to the child component", ()=>{
         
         const mockedStockDetail = jest.fn()
         jest.mock('../src/components/StockDetail', (props) =>{
