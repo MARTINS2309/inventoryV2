@@ -16,7 +16,17 @@ export const StockEventsTable = ({products, stockEvents}) => {
                 }, 0)
 
                 return (
-                    <div className="StockEventTable_Container" data-testid= "s-e-t-container" key={'p'+id}>
+                    <div 
+                        className="StockEventTable_Container" 
+                        data-testid= "s-e-t-container" 
+                        key={'p'+id}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'Right',
+                            alignItems: 'Right',
+                            height: '100vh'
+                        }}
+                    >
                         <StockDetail 
                             name={product.attributes.name} 
                             total={stockTotal} 
