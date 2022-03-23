@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 
 export const StockDetail = ({name, total, stockEvents}) => {
+    //use state show to determine if stockEvents are displayed
     const [show, setShow] = useState(false);
 
+    //map stock events displaying desired info
     const listStockEvents = (stockEvents ?? []).map(stockEvent => (
         <div 
             className="StockDetail_Card"
@@ -16,6 +18,7 @@ export const StockDetail = ({name, total, stockEvents}) => {
         </div>
     ))
 
+    //display product with total in main window and stockEvents when clicked
     return (
         <div 
             className="StockDetail" 

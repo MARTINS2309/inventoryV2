@@ -1,12 +1,21 @@
 .App{
-  max-width: 500px;
   margin: auto;
-  padding: 42px 24px;
-  list-style-type: none;
+}
+
+.Greeting{
+  max-width: 80%;
+  margin: auto;
+  padding: 24px;
+}
+
+.StockEventTable{
+  max-width: 80%;
+  margin: auto;
+  padding: 24px;
 }
 
 .StockDetail_Card{
-  margin: 12px 0;
+  margin: 24px 48px;
   border: 2px solid slategrey;
   border-radius: 4px;
   padding: 24px;

@@ -3,10 +3,12 @@ import {StockDetail} from './StockDetail';
 import {fetchProducts, fetchStockEvents} from './utils/API'
 
 
-//fetch all stock events
-//separate by different products
-//Display them
+//fetch all stock events and products
+//separate stock events by different products
+//Display Product with all relevant stock events to stock Detail if viewed
+
 export const StockEventsTable = () => {
+    //example state
     const [fetchedProducts, setFectechedProducts] = useState(
         [
           {
@@ -46,16 +48,20 @@ export const StockEventsTable = () => {
         ]
     );
     const [isSubscribed, setIsSubscribed] = useState(true);
-
+    // data retrival
     useEffect(()=>{
+        //use isSubscibed to limit API calls
         if (isSubscribed){
-            fetchProducts({setFectechedProducts}).catch(console.error)
-            fetchStockEvents({setFetchedStockEvents}).catch(console.error)
+            //import utils from API.js and pass state setter to function
+            fetchProducts( {setFectechedProducts} ).catch(console.error)
+            fetchStockEvents( {setFetchedStockEvents} ).catch(console.error)
             setIsSubscribed(false)
         }
     },[isSubscribed]);
     
-
+    //filter stock events by product
+    // calculate quantity
+    // pass each (product details, quantity and relevant stockEvents) to stock detail
     return (
         <div className="StockEventTable" data-testid= "s-e-t">
             {(fetchedProducts ?? []).map(product => {

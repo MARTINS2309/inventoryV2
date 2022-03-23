@@ -1,5 +1,6 @@
 import axios from "axios"
 
+//fetch function for products takes State setter as a prop and gets data using axios then sets it
 export const fetchProducts = async ({setFectechedProducts}) => {
   const productsRes =  await axios({
     method: 'GET',
@@ -8,6 +9,8 @@ export const fetchProducts = async ({setFectechedProducts}) => {
   setFectechedProducts(productsRes.data.data)
 }
 
+//fetch function for stock events takes State setter as a prop and gets data using axios then sets it
+//must include params populate * to make the response include relational data
 export const fetchStockEvents = async ({setFetchedStockEvents}) => {
   const stockEventsRes = await axios({
     method: 'GET',

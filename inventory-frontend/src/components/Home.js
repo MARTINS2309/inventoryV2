@@ -5,8 +5,8 @@ export const Home = () => {
     return (
         <div>
             <div className="Greeting">
-                <p>Hello!</p>
-                <p>Welcome to Inventory Management System V2</p>
+                <h1>Hello!</h1>
+                <h2>Welcome to Inventory Management System V2</h2>
             </div>
         </div>
     )

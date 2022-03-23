@@ -1,19 +1,25 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Container,  Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 export const Navibar = () => {
     return (
-        <div className="Navi">
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/">Inventory Management System V2</Navbar.Brand>
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="/stockevents">Stocks</Nav.Link>
-                    </Nav>
-                    <Nav>
-                        <Nav.Link href="https://github.com/MARTINS2309/inventoryV2">Github</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
+        <div className="Navi">            
+            <Navbar bg="light" expand="lg">
+                <Container>
+                    <Navbar.Brand href="/">Inventory Management System</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="/stockevents">Stock</Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <NavDropdown title="Links" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="https://github.com/MARTINS2309/inventoryV2">Github</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
             </Navbar>
         </div>
     );
