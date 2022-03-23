@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import {StockDetail} from './StockDetail';
+import {fetchProducts, fetchStockEvents} from './utils/API'
 
 
 //fetch all stock events
@@ -19,7 +19,7 @@ export const StockEventsTable = () => {
             }
           }
         ] 
-      );
+    );
     const [fetchedStockEvents, setFetchedStockEvents] = useState(
         [
           {
@@ -44,35 +44,16 @@ export const StockEventsTable = () => {
             }
           }
         ]
-      );
+    );
     const [isSubscribed, setIsSubscribed] = useState(true);
 
     useEffect(()=>{
-        const fetchProducts = async () => {
-          const productsRes =  await axios({
-            method: 'GET',
-            url: 'http://localhost:1337/api/products'
-          })
-          setFectechedProducts(productsRes.data.data)
-        }
-    
-        const fetchStockEvents = async () => {
-          const stockEventsRes = await axios({
-            method: 'GET',
-            url: 'http://localhost:1337/api/stockevents',
-            params: {
-              populate: '*'
-            },
-          })
-          setFetchedStockEvents(stockEventsRes.data.data)
-        }
-    
         if (isSubscribed){
-          fetchProducts().catch(console.error)
-          fetchStockEvents().catch(console.error)
-          setIsSubscribed(false)
+            fetchProducts({setFectechedProducts}).catch(console.error)
+            fetchStockEvents({setFetchedStockEvents}).catch(console.error)
+            setIsSubscribed(false)
         }
-      },[]);
+    },[isSubscribed]);
     
 
     return (
