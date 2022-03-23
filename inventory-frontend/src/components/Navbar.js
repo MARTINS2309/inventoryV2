@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container,  Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
+//navbar for the app
+//using react-boostrap to speed up development
 export const Navibar = () => {
     return (
         <div className="Navi">            
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="success" variant="dark" expand="lg">
                 <Container>
                     <Navbar.Brand href="/">Inventory Management System</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
