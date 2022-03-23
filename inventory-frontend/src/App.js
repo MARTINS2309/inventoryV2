@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {StockEventsTable} from './components/StockEventsTable';
-import {Navibar} from './components/Navbar';
+import {Navibar} from './components/Navibar';
 import {Home} from './components/Home';
 
 

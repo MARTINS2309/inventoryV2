@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container,  Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 //navbar for the app
 //using react-boostrap to speed up development
