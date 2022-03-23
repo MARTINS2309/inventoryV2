@@ -4,8 +4,7 @@
   "info": {
     "singularName": "stockevent",
     "pluralName": "stockevents",
-    "displayName": "stockevent",
-    "description": ""
+    "displayName": "Stockevent"
   },
   "options": {
     "draftAndPublish": true

@@ -49,10 +49,9 @@ export const App = () => {
       }
     ]
   );
+  const [isSubscribed, setIsSubscribed] = useState(true);
 
   useEffect(()=>{
-    let isSubscribed = true;
-
     const fetchProducts = async () => {
       const productsRes =  await axios({
         method: 'GET',
@@ -75,7 +74,7 @@ export const App = () => {
     if (isSubscribed){
       fetchProducts().catch(console.error)
       fetchStockEvents().catch(console.error)
-      isSubscribed=false
+      setIsSubscribed(false)
     }
   },[]);
 
@@ -89,15 +88,6 @@ export const App = () => {
           </Routes>
         </BrowserRouter>
     </div>
-    /*
-    <div className="App" data-testid="app">
-      <h1>Inventory v2</h1>
-      <StockEventsTable 
-        products={fetchedProducts}
-        stockEvents={fetchedStockEvents}
-      />
-    </div>
-    */
   )
 
 }
