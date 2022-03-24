@@ -14,9 +14,25 @@
   padding: 24px;
 }
 
-.StockDetail_Card{
-  margin: 24px 48px;
+.StockDetail{
+  margin: 12px 0px;
+  padding: 4px;
+  border: 2px solid slategrey;
+  border-radius: 4px;
+  background-color: #198754;
+}
+
+.StockDetail_Heading{
   border: 2px solid slategrey;
   border-radius: 4px;
   padding: 24px;
+  background-color: white;
+}
+
+.StockDetail_Card{
+  margin: 0;
+  border: 2px solid slategrey;
+  border-radius: 4px;
+  padding: 24px;
+  background-color: #FAF9F6;
 }

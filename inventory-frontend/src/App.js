@@ -6,7 +6,6 @@ import {Home} from './components/Home';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 //Main app comonent to deal with routing and calling components
 export const App = () => {
 
