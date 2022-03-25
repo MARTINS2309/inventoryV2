@@ -39,17 +39,15 @@ router.post('/', (req, res) => {
 router
     .route('/:id')
     .get((req, res) => {
-        res.send({ 
-            data: {
-            id: parseInt(req.params.id),
-            attributes:{
-                name: "Product "+req.params.id,
-                createdAt:	"2022-02-18T10:47:49.151Z",
-                updatedAt:	"2022-02-18T10:58:40.866Z",
-                publishedAt:	"2022-02-18T10:58:40.865Z", 
-            }
-            }
-        });
+        db
+        .any(`SELECT id, name, created_at, updated_at, published_at FROM products WHERE id= ${req.params.id};`)
+        .then(rows => {
+            res.json(rows)
+        })
+        .catch(error =>{
+            console.log('error', error)
+        })
+
     })
     .put((req, res) => {
         res.send('update product '+req.params.id);
@@ -59,7 +57,7 @@ router
 });
 
 router.param("id", (req, res, next, id) => {
-    console.log(id)
+    console.log(`GET product id:${id}`)
     next()
 })
 
