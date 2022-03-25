@@ -13,39 +13,25 @@ export const StockEventsTable = () => {
         [
           {
             id: 1,
-            attributes:{
-              name: "App failed to connect",
-              createdAt:	"2022-02-18T10:47:49.151Z",
-              updatedAt:	"2022-02-18T10:58:40.866Z",
-              publishedAt:	"2022-02-18T10:58:40.865Z", 
-            }
+            name: "App failed to connect",
+            createdAt:	"2022-02-18T10:47:49.151Z",
+            updatedAt:	"2022-02-18T10:58:40.866Z",
+            publishedAt:	"2022-02-18T10:58:40.865Z", 
           }
         ] 
     );
     const [fetchedStockEvents, setFetchedStockEvents] = useState(
-        [
-          {
-            id: 1,
-            attributes:{
-              type: 'add',
-              qty: 100,
-              createdAt:	"2022-02-18T10:59:02.976Z",
-              updatedAt:	"2022-02-18T10:59:23.930Z",
-              publishedAt:	"2022-02-18T10:59:23.929Z",
-              product: {
-                data: {
-                  id: 1,
-                  attributes:{
-                    name: "App failed to connect",
-                    createdAt:	"2022-02-18T10:47:49.151Z",
-                    updatedAt:	"2022-02-18T10:58:40.866Z",
-                    publishedAt:	"2022-02-18T10:58:40.865Z", 
-                  }
-                }
-              }
-            }
-          }
-        ]
+      [
+        {
+          id: 1,
+          type: 'add',
+          qty: 100,
+          createdAt:	"2022-02-18T10:59:02.976Z",
+          updatedAt:	"2022-02-18T10:59:23.930Z",
+          publishedAt:	"2022-02-18T10:59:23.929Z",
+          product_id: 1
+        }
+      ]
     );
     const [isSubscribed, setIsSubscribed] = useState(true);
     // data retrival
@@ -67,7 +53,7 @@ export const StockEventsTable = () => {
             {(fetchedProducts ?? []).map(product => {
                 const {id} = product
 
-                const relevantStockEvents = fetchedStockEvents.filter(se => se.attributes.product.data.id === id)
+                const relevantStockEvents = fetchedStockEvents.filter(se => se.product_id === id)
                 
                 const stockTotal = relevantStockEvents.reduce((accumulator, currentElem) =>{
                     return accumulator + currentElem.attributes.qty
@@ -80,7 +66,7 @@ export const StockEventsTable = () => {
                         key={'p'+id}
                     >
                         <StockDetail 
-                            name={product.attributes.name} 
+                            name={product.name} 
                             total={stockTotal} 
                             stockEvents= {relevantStockEvents}
                         />

@@ -4,9 +4,9 @@ import axios from "axios"
 export const fetchProducts = async ({setFectechedProducts}) => {
   const productsRes =  await axios({
     method: 'GET',
-    url: 'http://localhost:1337/api/products'
+    url: 'http://localhost:3001/api/products'
   })
-  setFectechedProducts(productsRes.data.data)
+  setFectechedProducts(productsRes.data)
 }
 
 //fetch function for stock events takes State setter as a prop and gets data using axios then sets it
