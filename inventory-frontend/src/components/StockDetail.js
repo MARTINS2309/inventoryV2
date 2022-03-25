@@ -12,9 +12,9 @@ export const StockDetail = ({name, total, stockEvents}) => {
             key={'s'+stockEvent.id}
         >
             <p data-testid="p-id">ID: {stockEvent.id}</p>
-            <p data-testid="p-type">TYPE: {stockEvent.attributes.type}</p>
-            <p data-testid="p-qty">QUANTITY: {stockEvent.attributes.qty}</p>
-            <p data-testid="p-time">TIMESTAMP: {stockEvent.attributes.publishedAt}</p>
+            <p data-testid="p-type">TYPE: {stockEvent.type}</p>
+            <p data-testid="p-qty">QUANTITY: {stockEvent.qty}</p>
+            <p data-testid="p-time">TIMESTAMP: {stockEvent.published_at}</p>
         </div>
     ))
 

@@ -56,7 +56,7 @@ export const StockEventsTable = () => {
                 const relevantStockEvents = fetchedStockEvents.filter(se => se.product_id === id)
                 
                 const stockTotal = relevantStockEvents.reduce((accumulator, currentElem) =>{
-                    return accumulator + currentElem.attributes.qty
+                    return accumulator + currentElem.qty
                 }, 0)
 
                 return (

@@ -14,10 +14,7 @@ export const fetchProducts = async ({setFectechedProducts}) => {
 export const fetchStockEvents = async ({setFetchedStockEvents}) => {
   const stockEventsRes = await axios({
     method: 'GET',
-    url: 'http://localhost:1337/api/stockevents',
-    params: {
-      populate: '*'
-    },
+    url: 'http://localhost:3001/api/stockevents',
   })
-  setFetchedStockEvents(stockEventsRes.data.data)
+  setFetchedStockEvents(stockEventsRes.data)
 }
