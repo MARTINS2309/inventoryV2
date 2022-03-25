@@ -2,12 +2,24 @@
 
 This project is about an inventory management system.
 
-To start project:
+## Requirements:
 
-cd to inventory-backend then run yarn develop
+Node.js
 
-cd to inventory-frontend run npm start
+## To start project for the first time:
 
-open browser to http://localhost:3000/ to see app running
+open a terminal instance
 
-open another tab for http://localhost:1337/admin to access contnent managment from strapi
+cd to express-js
+run "npm install"
+run "npm run devStart"
+
+open another terminal instance
+
+cd to inventory-frontend
+run "npm install"
+run "npm start"
+
+the browser should auto open on http://localhost:3000/ or do it yourself to see the app running
+
+you don't include the "npm install" comands on future launches
