@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {StockDetail} from './StockDetail';
-import {fetchProducts, fetchStockEvents} from './utils/API'
-
-
+import {fetchData} from './utils.js';
 //fetch all stock events and products
 //separate stock events by different products
 //Display Product with all relevant stock events to stock Detail if viewed
@@ -14,9 +12,9 @@ export const StockEventsTable = () => {
           {
             id: 1,
             name: "App failed to connect",
-            createdAt:	"2022-02-18T10:47:49.151Z",
-            updatedAt:	"2022-02-18T10:58:40.866Z",
-            publishedAt:	"2022-02-18T10:58:40.865Z", 
+            created_at:	"2022-02-18T10:47:49.151Z",
+            updated_at:	"2022-02-18T10:58:40.866Z",
+            published_at:	"2022-02-18T10:58:40.865Z"
           }
         ] 
     );
@@ -26,25 +24,26 @@ export const StockEventsTable = () => {
           id: 1,
           type: 'add',
           qty: 100,
-          createdAt:	"2022-02-18T10:59:02.976Z",
-          updatedAt:	"2022-02-18T10:59:23.930Z",
-          publishedAt:	"2022-02-18T10:59:23.929Z",
+          created_at:	"2022-02-18T10:59:02.976Z",
+          updated_at:	"2022-02-18T10:59:23.930Z",
+          published_at:	"2022-02-18T10:59:23.929Z",
           product_id: 1
         }
       ]
     );
-    const [isSubscribed, setIsSubscribed] = useState(true);
+
     // data retrival
     useEffect(()=>{
-        //use isSubscibed to limit API calls
-        if (isSubscribed){
-            //import utils from API.js and pass state setter to function
-            fetchProducts( {setFectechedProducts} ).catch(console.error)
-            fetchStockEvents( {setFetchedStockEvents} ).catch(console.error)
-            setIsSubscribed(false)
-        }
-    },[isSubscribed]);
-    
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        fetchData({setData: setFectechedProducts, url: `http://localhost:3001/api/products`, signal: signal});
+        fetchData({setData: setFetchedStockEvents, url: `http://localhost:3001/api/stockevents`, signal: signal});
+
+        return () => {controller.abort();};
+    }, [])
+
+    //map stock events to products
     //filter stock events by product
     // calculate quantity
     // pass each (product details, quantity and relevant stockEvents) to stock detail
