@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route , BrowserRouter} from 'react-router-dom';
 import {StockEventsTable} from './components/StockEventsTable';
 import {Navibar} from './components/Navibar';
 import {Home} from './components/Home';
@@ -12,10 +12,12 @@ export const App = () => {
   return (
     <div className="App" data-testid="app">
       <Navibar />
-      <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path="/stockevents" element={< StockEventsTable />} />
-      </Routes>        
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path="/stockevents" element={< StockEventsTable />} />
+        </Routes> 
+      </BrowserRouter>  
     </div>
   )
 }
