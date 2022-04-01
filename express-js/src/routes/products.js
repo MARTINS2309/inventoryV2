@@ -31,9 +31,9 @@ router.get('/', (req, res) => {
 // create a POST route for new Product
 router.post('/', (req, res) => {
     db
-        .none("INSERT INTO products (name, created_at, updated_at, published_at) VALUES (${name}, ${created_at}, ${updated_at}, ${published_at})", req.body)
-        .then(() => {
-            res.sendStatus(201)
+        .any("INSERT INTO products (name, created_at, updated_at, published_at) VALUES (${name}, ${created_at}, ${updated_at}, ${published_at}) RETURNING id, name, created_at, updated_at, published_at", req.body)
+        .then(rows => {
+            res.json(rows)
         })
         .catch(error =>{
             res.sendStatus(500)
@@ -48,26 +48,46 @@ router
     .route('/:id')
     .get((req, res) => {
         db
-        .any(`SELECT id, name, created_at, updated_at, published_at FROM products WHERE id= ${req.params.id};`)
-        .then(rows => {
-            res.json(rows)
-        })
-        .catch(error =>{
-            console.log('error', error)
-        })
-        console.log('GET')
+            .any(`SELECT id, name, created_at, updated_at, published_at FROM products WHERE id= ${req.params.id};`)
+            .then(rows => {
+                res.json(rows)
+            })
+            .catch(error =>{
+                console.log('error', error)
+            })
+
+        console.log('GET product by id - ' + req.params.id)
     })
     .put((req, res) => {
-        res.send('update product '+req.params.id);
-        console.log('update')
+        db
+            .any(`UPDATE products SET name= '${req.body.name}', updated_at= '${req.body.updated_at}' WHERE id= ${req.params.id} RETURNING id, name, created_at, updated_at, published_at;`)
+            .then(rows => {
+                res.json(rows)
+            })
+            .catch(error =>{
+                res.sendStatus(500)
+                console.log('error', error)
+            })
+
+        console.log('PUT - ' + req.body.name)
     })
     .delete((req, res) => {
-        res.send('delete product '+req.params.id);
-        console.log('delete')
-});
+        db
+            .none(`DELETE FROM products WHERE id= ${req.params.id};`)
+            .then(() => {
+                res.sendStatus(200)
+            })
+            .catch(error =>{
+                res.sendStatus(500)
+                console.log('error', error)
+            })
+
+        console.log('DELETE - ' + req.params.name)
+    })
+
 
 router.param("id", (req, res, next, id) => {
-    console.log(`product id:${id} `)
+    console.log(`product id:${id}`)
     next()
 })
 

@@ -1,12 +1,12 @@
 //This component is used to create, update and delete products.
 //At the top of this component we have a form to create a new product in a box.
 //Then this component displays a list of all products in the database.
-//to the right of each product is a button to edit the product and a button delete the product.
+//to the right of each product is a button to edit and another to delete it.
 
 import React from "react";
-import {    useState, useEffect } from "react";
-import {    Form, Button, Alert } from "react-bootstrap";
-import {    fetchData } from "./utils";
+import { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { fetchData } from "./utils";
 
 export const CRUDProduct = () => {
     const [products, setProducts] = useState([]);
@@ -57,12 +57,14 @@ export const CRUDProduct = () => {
                 signal: signal
             });
 
-            if (response.status === 201) {
+            if (response.status === 200) {
                 setShow(false);
                 setAlertMessage("Product created successfully");
                 setAlertType("success");
                 setShowAlert(true);
-                setProducts([...products, body]);
+                //extract product from response
+                const res = await response.json();
+                setProducts([...products, res[0]]);
                 return;
             }
         } catch (error) {
@@ -102,6 +104,11 @@ export const CRUDProduct = () => {
                 setAlertMessage("Product updated successfully");
                 setAlertType("success");
                 setShowAlert(true);
+                //remove old product from list with id
+                const newProducts = products.filter(p => p.id !== product.id);
+                //extract product from response
+                const res = await response.json();
+                setProducts([...newProducts, res[0]]);
                 return;
             }
         } catch (error) {
@@ -135,6 +142,9 @@ export const CRUDProduct = () => {
                 setAlertMessage("Product deleted successfully");
                 setAlertType("success");
                 setShowAlert(true);
+                //remove old product from list with id
+                const newProducts = products.filter(p => p.id !== product.id);
+                setProducts(newProducts);
                 return;
             }
         } catch (error) {
@@ -173,32 +183,39 @@ export const CRUDProduct = () => {
         setShowAlert(false);
     }
 
+    //Hide form after cancelling
+    const handleCancel = () => {
+        setProduct({});
+        setShow(false);
+        setShowDelete(false);
+    }
+
     return (
         <div className="CRUDProduct">
             <Alert show={showAlert} variant={alertType} onClose={handleClose} dismissible>
                 <p>{alertMessage}</p>
             </Alert>
 
-            <div className="create-product-form">
-                <Button onClick={handleShowCreate}>Create Product</Button>
-            </div>
-
             <div className="product-list">
                 <ul>
                     {products.map(product => (
                         <li key={product.id}>
                             <span className="product-name">{product.name}</span>
-                            <div className="button-group">
+                            <span className="button-group">
                                 <Button onClick={() => handleShowUpdate(product)}>Edit</Button>
                                 <Button onClick={() => handleShowDelete(product)}>Delete</Button>
-                            </div>
+                            </span>
                         </li>
                     ))}
                 </ul>
             </div>
 
+            <div className="create-product-button">
+                <Button onClick={handleShowCreate}>Create New Product</Button>
+            </div>
+
             {show&& 
-                <div>
+                <div className="create-product-form">
                     <Form onSubmit={product.id ? handleUpdate : handleCreate }>
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
@@ -214,7 +231,7 @@ export const CRUDProduct = () => {
                         }
 
                         {product.id && (
-                            <Button variant="secondary" onClick={() => {setProduct({}); setShow(false); setShowDelete(false) }}>
+                            <Button variant="secondary" onClick={() => handleCancel }>
                                 Cancel
                             </Button>
                         )}

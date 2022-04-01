@@ -36,3 +36,36 @@
   padding: 24px;
   background-color: #FAF9F6;
 }
+
+.CRUDProduct{
+  max-width: 1400px;
+  margin: auto;
+  padding: 0px 24px;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+li{
+  padding: 6px 12px;
+  border-bottom: 1px solid slategrey;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+span > button{
+  margin-left: 4px;
+}
+
+.create-product-form{
+  margin-left: 32px;
+}
+
+.create-product-button{
+  margin-left: 32px;
+}
+
