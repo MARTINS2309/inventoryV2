@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
             res.json(rows)
         })
         .catch(error =>{
+            res.sendStatus(500)
             console.log('error', error)
         })
 
@@ -29,8 +30,17 @@ router.get('/', (req, res) => {
 
 // create a POST route for new Product
 router.post('/', (req, res) => {
-    res.sendStatus(201);
-    console.log('Product created '+req.body.name)
+    db
+        .none("INSERT INTO products (name, created_at, updated_at, published_at) VALUES (${name}, ${created_at}, ${updated_at}, ${published_at})", req.body)
+        .then(() => {
+            res.sendStatus(201)
+        })
+        .catch(error =>{
+            res.sendStatus(500)
+            console.log('error', error)
+        })
+     
+    console.log('POST product - ' + req.body.name)
 });
 
 // create route to cover all by id request

@@ -62,6 +62,7 @@ export const CRUDProduct = () => {
                 setAlertMessage("Product created successfully");
                 setAlertType("success");
                 setShowAlert(true);
+                setProducts([...products, body]);
                 return;
             }
         } catch (error) {
