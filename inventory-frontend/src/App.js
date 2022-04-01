@@ -5,6 +5,7 @@ import {Navibar} from './components/Navibar';
 import {Home} from './components/Home';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { CRUDProduct } from './components/CRUDProduct';
 
 
 //Main app comonent to deal with routing and calling components
@@ -15,7 +16,8 @@ export const App = () => {
       <Navibar />
         <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path="/stockevents" element={< StockEventsTable />} />
+          <Route path="/stockeventstable" element={< StockEventsTable />} />
+          <Route path="/products" element={< CRUDProduct />} />
           <Route path='*' element={ <div>Not Found</div>} />
         </Routes>
         

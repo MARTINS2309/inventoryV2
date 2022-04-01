@@ -13,7 +13,8 @@ export const Navibar = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/" data-testid="home">Home</Nav.Link>
-                            <Nav.Link href="/stockevents" data-testid="stock">Stock</Nav.Link>
+                            <Nav.Link href="/stockeventstable" data-testid="stock">Stock</Nav.Link>
+                            <Nav.Link href="/products" data-testid="products">Products</Nav.Link>
                         </Nav>
                         <Nav>
                             <NavDropdown title="Links" id="basic-nav-dropdown">
