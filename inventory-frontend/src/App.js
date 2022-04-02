@@ -6,6 +6,8 @@ import {Home} from './components/Home';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CRUDProduct } from './components/CRUDProduct';
+import { CRUDStockEvent } from './components/CRUDStockEvent';
+import { TableTest } from './components/TableTest';
 
 
 //Main app comonent to deal with routing and calling components
@@ -18,6 +20,8 @@ export const App = () => {
           <Route path='/' element={<Home/>} />
           <Route path="/stockeventstable" element={< StockEventsTable />} />
           <Route path="/products" element={< CRUDProduct />} />
+          <Route path="/stockevents" element={< CRUDStockEvent />} />
+          <Route path="/tabletest" element={ <TableTest/>} />
           <Route path='*' element={ <div>Not Found</div>} />
         </Routes>
         

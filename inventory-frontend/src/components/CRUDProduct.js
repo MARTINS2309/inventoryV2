@@ -1,21 +1,22 @@
 //This component is used to create, update and delete products.
-//At the top of this component we have a form to create a new product in a box.
-//Then this component displays a list of all products in the database.
+//This component displays a list of all products in the database.
 //to the right of each product is a button to edit and another to delete it.
-
+//There is a form to enter the details for creating and editing products.
 import React from "react";
 import { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { fetchData } from "./utils";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 export const CRUDProduct = () => {
     const [products, setProducts] = useState([]);
+    const [product, setProduct] = useState({});
     const [show, setShow] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("");
-    const [product, setProduct] = useState({});
 
     //data retrival
     useEffect(() => {
@@ -58,23 +59,16 @@ export const CRUDProduct = () => {
             });
 
             if (response.status === 200) {
-                setShow(false);
-                setAlertMessage("Product created successfully");
-                setAlertType("success");
-                setShowAlert(true);
+                handleClose();
+                handleAlert("Product created successfully", "success");
                 //extract product from response
                 const res = await response.json();
                 setProducts([...products, res[0]]);
                 return;
             }
         } catch (error) {
-            if (error.name === "AbortError") {
-                return;
-            }
+            handleAlert(`Error creating product: ${event.target.name.value} error: ${error}`, "danger");
         }
-        setAlertMessage("Failed to create product");
-        setAlertType("danger");
-        setShowAlert(true);
     }
 
     //Update a product
@@ -100,25 +94,17 @@ export const CRUDProduct = () => {
             });
 
             if (response.status === 200) {
-                setShow(false);
-                setAlertMessage("Product updated successfully");
-                setAlertType("success");
-                setShowAlert(true);
-                //remove old product from list with id
+                handleClose();
+                handleAlert("Product updated successfully", "success");
                 const newProducts = products.filter(p => p.id !== product.id);
-                //extract product from response
                 const res = await response.json();
                 setProducts([...newProducts, res[0]]);
-                return;
             }
         } catch (error) {
-            if (error.name === "AbortError") {
-                return;
-            }
+            handleAlert(`Error updating product: ${product.name} error: ${error}`, "danger");
+            console.log('error', error)
         }
-        setAlertMessage("Failed to update product");
-        setAlertType("danger");
-        setShowAlert(true);
+        
     }
 
     //Delete a product
@@ -138,23 +124,16 @@ export const CRUDProduct = () => {
             });
 
             if (response.status === 200) {
-                setShow(false);
-                setAlertMessage("Product deleted successfully");
-                setAlertType("success");
-                setShowAlert(true);
-                //remove old product from list with id
+                handleClose();
+                handleAlert("Product deleted successfully", "success");
                 const newProducts = products.filter(p => p.id !== product.id);
                 setProducts(newProducts);
-                return;
             }
         } catch (error) {
-            if (error.name === "AbortError") {
-                return;
-            }
+            handleAlert(`Failed to delete Product: ${product.name} error: ${error}`, "danger");
+            console.log('error', error)
         }
-        setAlertMessage("Failed to delete product");
-        setAlertType("danger");
-        setShowAlert(true);
+        
     }
 
     //Show form to create a new product
@@ -178,65 +157,93 @@ export const CRUDProduct = () => {
         setProduct(product);
     }
 
-    //Close alert message
-    const handleClose = () => {
-        setShowAlert(false);
+    //pass the alert and display it
+    const handleAlert = (message, type) => {
+        setAlertMessage(message);
+        setAlertType(type);
+        setShowAlert(true);
     }
 
-    //Hide form after cancelling
-    const handleCancel = () => {
-        setProduct({});
-        setShow(false);
+    //Close the Modal and clear the state
+    const handleClose = () => {
         setShowDelete(false);
+        setShow(false);
+        setShowAlert(false);
+        setProduct({});
+        setAlertMessage("");
+        setAlertType("");      
     }
 
     return (
         <div className="CRUDProduct">
-            <Alert show={showAlert} variant={alertType} onClose={handleClose} dismissible>
-                <p>{alertMessage}</p>
-            </Alert>
-
-            <div className="product-list">
-                <ul>
-                    {products.map(product => (
-                        <li key={product.id}>
-                            <span className="product-name">{product.name}</span>
-                            <span className="button-group">
-                                <Button onClick={() => handleShowUpdate(product)}>Edit</Button>
-                                <Button onClick={() => handleShowDelete(product)}>Delete</Button>
-                            </span>
-                        </li>
-                    ))}
-                </ul>
+            <div className="p-table">
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                            <th>Published at</th>
+                            <th>
+                                <button className="btn btn-success" onClick={handleShowCreate}>
+                                    Create Product
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map(product => (
+                            <tr key={product.id}>
+                                <td>{product.name}</td>
+                                <td>{product.created_at}</td>
+                                <td>{product.updated_at}</td>
+                                <td>{product.published_at}</td>
+                                <td>
+                                    <button className="btn btn-primary" onClick={() => handleShowUpdate(product)}>
+                                        <FontAwesomeIcon icon={faEdit} />
+                                    </button>
+                                    <button className="btn btn-danger" onClick={() => handleShowDelete(product)}>
+                                        <FontAwesomeIcon icon={faTrashAlt} />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            <div className="create-product-button">
-                <Button onClick={handleShowCreate}>Create New Product</Button>
-            </div>
-
-            {show&& 
-                <div className="create-product-form">
-                    <Form onSubmit={product.id ? handleUpdate : handleCreate }>
-                        <Form.Group controlId="name">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" name="name" defaultValue={product.name} />
-                        </Form.Group>
-
-                        <Button variant="primary" type="submit">
-                            {product.id ? "Update" : "Create"}
-                        </Button>
-
-                        {showDelete &&  
-                            <Button variant="danger" onClick={handleDelete}>Delete</Button>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{showDelete ? "Delete product" : product.id ? "Edit product" : "Create product"}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={showDelete ? handleDelete : product.id ? handleUpdate : handleCreate}>
+                        {showDelete ?(
+                            <div className="form-group">
+                                 <p>Are you sure you want to delete {product.name}?</p>
+                            </div>) : ( 
+                            <div className="form-group">
+                                <label htmlFor="name">Name</label>
+                                <input type="text" className="form-control" id="name" name="name" defaultValue={product.name} />
+                            </div>)
                         }
+                        <div className="form-buttons">
+                            <button type="submit" className={showDelete ? "btn btn-danger" : "btn btn-primary"}>{showDelete ? "Delete" : product.id ? "Update" : "Create"}</button>
+                        </div>
+                    </form>
+                </Modal.Body>
+            </Modal>
 
-                        {product.id && (
-                            <Button variant="secondary" onClick={() => handleCancel }>
-                                Cancel
-                            </Button>
-                        )}
-                    </Form>
-                </div>}
+            <Modal show={showAlert} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{alertType}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>{alertMessage}</p>
+                </Modal.Body>
+            </Modal>
+            
+
             
         </div>
     );

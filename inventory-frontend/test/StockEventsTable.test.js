@@ -25,7 +25,7 @@ describe("StockEventsTable", () => {
         published_at:	"2022-02-18T10:58:40.865Z"
     }];
     
-    it.skip("renders correctly", () => {
+    it("renders correctly", () => {
         const { queryByTestId } = render(<StockEventsTable/>);
         
         jest.mock("../src/components/utils", () => {

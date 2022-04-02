@@ -69,3 +69,12 @@ span > button{
   margin-left: 32px;
 }
 
+.CRUDStockEvent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.se-table{
+  margin: 2rem
+}
