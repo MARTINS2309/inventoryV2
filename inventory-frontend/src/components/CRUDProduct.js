@@ -6,8 +6,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { fetchData } from "./utils";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import  TableT  from "./Table/Table";
 
 export const CRUDProduct = () => {
     const [products, setProducts] = useState([]);
@@ -18,6 +17,13 @@ export const CRUDProduct = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("");
 
+    const columns = [
+        { label: "id", accessor: "id", sortable: true },
+        { label: "Name", accessor: "name", sortable: true },
+        { label: "Created At", accessor: "created_at", sortable: true },
+        { label: "Updated At", accessor: "updated_at", sortable: true },
+        { label: "Published At", accessor: "published_at", sortable: true }
+    ];
     //data retrival
     useEffect(() => {
         const controller = new AbortController();
@@ -63,11 +69,11 @@ export const CRUDProduct = () => {
                 handleAlert("Product created successfully", "success");
                 //extract product from response
                 const res = await response.json();
-                setProducts([...products, res[0]]);
-                return;
+                setProducts([...products, {...body,id: res[0].id}]);
             }
         } catch (error) {
             handleAlert(`Error creating product: ${event.target.name.value} error: ${error}`, "danger");
+            console.log('error', error);
         }
     }
 
@@ -174,42 +180,11 @@ export const CRUDProduct = () => {
         setAlertType("");      
     }
 
+    console.log('products', products)
     return (
         <div className="CRUDProduct">
             <div className="p-table">
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Published at</th>
-                            <th>
-                                <button className="btn btn-success" onClick={handleShowCreate}>
-                                    Create Product
-                                </button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map(product => (
-                            <tr key={product.id}>
-                                <td>{product.name}</td>
-                                <td>{product.created_at}</td>
-                                <td>{product.updated_at}</td>
-                                <td>{product.published_at}</td>
-                                <td>
-                                    <button className="btn btn-primary" onClick={() => handleShowUpdate(product)}>
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </button>
-                                    <button className="btn btn-danger" onClick={() => handleShowDelete(product)}>
-                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <TableT columns={columns} caption={"Product"} data={products} handleShowUpdate={handleShowUpdate} handleShowDelete={handleShowDelete} item={product} handleShowCreate={handleShowCreate} />
             </div>
 
             <Modal show={show} onHide={handleClose}>
@@ -242,11 +217,6 @@ export const CRUDProduct = () => {
                     <p>{alertMessage}</p>
                 </Modal.Body>
             </Modal>
-            
-
-            
         </div>
     );
-
-
 }

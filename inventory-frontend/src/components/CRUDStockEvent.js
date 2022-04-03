@@ -6,8 +6,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { fetchData } from "./utils";
 import { Modal } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import  TableT  from "./Table/Table";
 
 export const CRUDStockEvent = () => {
     const [stockevents, setStockevents] = useState([]);
@@ -19,6 +18,15 @@ export const CRUDStockEvent = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("");
 
+    const columns = [
+        { label: "id", accessor: "id", sortable: true },
+        { label: "Product", accessor: "product_id", sortable: true },
+        { label: "Type", accessor: "type", sortable: true },
+        { label: "Quantity", accessor: "qty", sortable: true },
+        { label: "Created At", accessor: "created_at", sortable: true },
+        { label: "Updated At", accessor: "updated_at", sortable: true },
+        { label: "Published At", accessor: "published_at", sortable: true }
+    ];
 
     //data retrival
     useEffect(() => {
@@ -152,7 +160,7 @@ export const CRUDStockEvent = () => {
     }
 
     //Show the form to create a new stockevent
-    const handleCreateShow = () => {
+    const handleShowCreate = () => {
         setStockevent({});
         setShowCreEd(true);
     }
@@ -182,48 +190,18 @@ export const CRUDStockEvent = () => {
 
     return (
         <div className="CRUDStockEvent">
-            <div className="se-table">  
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Type</th>
-                            <th>Qty</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Published At</th>
-                            <th>Product ID</th>
-                            <th>
-                                <button className="btn btn-success" onClick={handleCreateShow}>
-                                    Create Stockevent
-                                </button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {stockevents.map(stockevent => (
-                            <tr key={stockevent.id}>
-                                <td>{stockevent.id}</td>
-                                <td>{stockevent.type}</td>
-                                <td>{stockevent.qty}</td>
-                                <td>{stockevent.created_at}</td>
-                                <td>{stockevent.updated_at}</td>
-                                <td>{stockevent.published_at}</td>
-                                <td>{stockevent.product_id}</td>
-                                <td>
-                                    <button className="btn btn-primary" onClick={() => handleShowUpdate(stockevent)}>
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </button>
-                                    <button className="btn btn-danger" onClick={() => handleShowDelete(stockevent)}>
-                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>    
+            <div className="se-table">
+                <TableT
+                    columns={columns}
+                    data={stockevents}
+                    caption={"Stockevent"}
+                    handleShowUpdate={handleShowUpdate}
+                    handleShowDelete={handleShowDelete}
+                    handleShowCreate={handleShowCreate}
+                />
             </div>
-            
+
+
             <Modal show={showCreEd} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{ stockevent.id ? "Update" : "Create"} Stockevent</Modal.Title>

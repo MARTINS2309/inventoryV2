@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TableHead = ({ columns, handleSorting }) => {
+const TableHead = ({ columns, handleSorting, handleShowCreate , caption }) => {
   const [sortField, setSortField] = useState("");
   const [order, setOrder] = useState("asc");
 
@@ -33,6 +33,9 @@ const TableHead = ({ columns, handleSorting }) => {
             </th>
           );
         })}
+        <th>
+          <button className="btn btn-success" onClick={handleShowCreate}>Create {caption}</button>
+        </th>
       </tr>
     </thead>
   );

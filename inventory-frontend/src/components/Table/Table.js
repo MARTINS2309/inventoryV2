@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableBody from "./TableBody";
 import TableHead from "./TableHead";
 
-export const TableT = (data, columns, caption) => {
+const TableT = ({columns, data, caption, handleShowUpdate, handleShowDelete , handleShowCreate }) => {
   const [tableData, setTableData] = useState(data);
+  
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
 
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
@@ -20,16 +24,17 @@ export const TableT = (data, columns, caption) => {
       setTableData(sorted);
     }
   };
-
   return (
     <div>
       <table className="table">
         <caption>
-            <h3>{caption}</h3>
+            {caption}s Table
         </caption>
-        <TableHead {...{ columns, handleSorting }} />
-        <TableBody {...{ columns, tableData }} />
+        <TableHead {...{ columns, handleSorting, handleShowCreate , caption }} />
+        <TableBody {...{ columns, tableData, handleShowDelete, handleShowUpdate }} />
       </table>
     </div>
   );
 };
+
+export default TableT;
