@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     .any("SELECT id, type, qty, created_at, updated_at, published_at, product_id FROM stockevents INNER JOIN stockevents_product_links ON id = stockevent_id;")
     .then(rows => {
         res.json(rows)
-        console.log('GET stockEvents')
+        console.log('GET - stockEvents')
     })
     .catch(error =>{
         res.sendStatus(500)
@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
     .any(`WITH ins1 as ( INSERT INTO stockevents(type, qty, created_at, updated_at, published_at) VALUES( '${req.body.type}', ${req.body.qty}, '${req.body.created_at}', '${req.body.updated_at}', '${req.body.published_at}' ) RETURNING id ) INSERT INTO stockevents_product_links(stockevent_id, product_id) VALUES((SELECT id FROM ins1) , ${req.body.product_id}) RETURNING (SELECT id FROM ins1);`)
     .then(rows => {
         res.json(rows)
-        console.log(`POST stockEvent - ${req.body.product_id} > ${req.body.type} >> ${req.body.qty}`)
+        console.log(`POST - stockEvent ${req.body.product_id} > ${req.body.type} >> ${req.body.qty}`)
     })
     .catch(error =>{
         res.sendStatus(500)
@@ -39,7 +39,7 @@ router
         .any(`SELECT id, type, qty, created_at, updated_at, published_at, product_id FROM stockevents INNER JOIN stockevents_product_links ON id = stockevent_id WHERE id= ${req.params.id};`)
         .then(rows => {
             res.json(rows)
-            console.log(`GET stockEvent by id > ${req.params.id}`)
+            console.log(`GET - by id > ${req.params.id}`)
         })
         .catch(error =>{
             res.sendStatus(500)
@@ -48,10 +48,10 @@ router
     })
     .put((req, res) => {
         db
-        .any(`UPDATE stockevents SET type= '${req.body.type}', qty= '${req.body.qty}', updated_at= '${req.body.updated_at}' WHERE id= ${req.params.id} RETURNING id, type, qty, created_at, updated_at, published_at, product_id;`)
+        .any(`WITH up1 as( UPDATE stockevents SET type= '${req.body.type}', qty= ${req.body.qty}, updated_at= '${req.body.updated_at}' WHERE id= ${req.params.id} RETURNING id ) UPDATE stockevents_product_links SET product_id=${req.body.product_id} WHERE stockevent_id = (SELECT id FROM up1) RETURNING stockevent_id;`)
         .then(rows => {
             res.json(rows)
-            console.log(`PUT - ${req.body.type} >> ${req.body.qty}`)
+            console.log(`PUT - ${req.body.product_id} > ${req.body.type} >> ${req.body.qty}`)
         })
         .catch(error =>{
             res.sendStatus(500)
@@ -63,7 +63,7 @@ router
         .any(`DELETE FROM stockevents WHERE id= ${req.params.id};`)
         .then(() => {
             res.sendStatus(200)
-            console.log(`DELETE > ${req.params.id}`)
+            console.log(`DELETE - ${req.params.id}`)
         })
         .catch(error =>{
             res.sendStatus(500)

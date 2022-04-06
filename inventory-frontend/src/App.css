@@ -1,13 +1,29 @@
 .App{
   margin: auto;
 }
-
+/*
+===============================
+Home Page
+===============================
+*/
 .Greeting{
   max-width: 1400px;
   margin: auto;
   padding: 24px;
 }
 
+.Images {
+  max-width: 1400px;
+  margin: auto;
+  padding: 24px;
+}
+
+
+/*
+===============================
+Stock Overview Page
+===============================
+*/
 .StockEventTable{
   max-width: 1400px;
   margin: auto;

@@ -32,6 +32,8 @@ export const StockEventsTable = () => {
       ]
     );
 
+    
+
     // data retrival
     useEffect(()=>{
         const controller = new AbortController();
@@ -67,7 +69,7 @@ export const StockEventsTable = () => {
                         <StockDetail 
                             name={product.name} 
                             total={stockTotal} 
-                            stockEvents= {relevantStockEvents}
+                            id={id}
                         />
                     </div>
                 )
@@ -75,3 +77,7 @@ export const StockEventsTable = () => {
         </div>
     )
 };
+
+/*
+
+*/

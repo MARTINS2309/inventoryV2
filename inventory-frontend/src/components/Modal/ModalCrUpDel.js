@@ -1,6 +1,6 @@
 import { Modal } from "react-bootstrap"
 
-const ModalCrUpDel = ({show, showDelete, handleClose, handleDelete, handleUpdate, handleCreate, item, item_type, items}) => {
+const ModalCrUpDel = ({show, showDelete, handleClose, handleDelete, handleUpdate, handleCreate, item, item_type, items, default_item}) => {
        
     return(
         <div className="ModalCrUpDel">
@@ -29,7 +29,7 @@ const ModalCrUpDel = ({show, showDelete, handleClose, handleDelete, handleUpdate
                                     </div>
                                     <div className="form-group">
                                         <label>Product ID</label>
-                                        <select defaultValue={item.product_id} name="product_id">
+                                        <select defaultValue={default_item ? default_item :item.product_id} name="product_id">
                                             {items.map(product => (
                                                 <option key={product.id} value={product.id}>{product.name}</option>
                                             ))}
