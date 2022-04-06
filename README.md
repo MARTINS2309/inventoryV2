@@ -4,7 +4,7 @@ This project is about an inventory management system.
 
 ## Requirements:
 
-Node.js
+Node.js, nodemon
 
 ## To start project for the first time:
 
