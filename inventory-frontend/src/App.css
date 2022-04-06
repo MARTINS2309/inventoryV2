@@ -35,14 +35,14 @@ Stock Overview Page
   padding: 4px;
   border: 2px solid slategrey;
   border-radius: 4px;
-  background-color: #198754;
+  background-color: #ACDFD7;
 }
 
 .StockDetail_Heading{
   border: 2px solid slategrey;
   border-radius: 4px;
   padding: 24px;
-  background-color: white;
+  background-color: #eff0f0;
 }
 
 .StockDetail_Card{
