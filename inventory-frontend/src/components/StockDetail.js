@@ -19,20 +19,6 @@ export const StockDetail = ({name, total, stockEvents, id}) => {
     const url = "products";
     const url2 = "stockevents";
 
-    //map stock events displaying desired info
-    const listStockEvents = (stockEvents ?? []).map(stockEvent => (
-        <div 
-            className="StockDetail_Card"
-            data-testid="stock-detail-card"
-            key={'s'+stockEvent.id}
-        >
-            <p data-testid="p-id">ID: {stockEvent.id}</p>
-            <p data-testid="p-type">TYPE: {stockEvent.type}</p>
-            <p data-testid="p-qty">QUANTITY: {stockEvent.qty}</p>
-            <p data-testid="p-time">TIMESTAMP: {stockEvent.published_at}</p>
-        </div>
-    ))
-
     //display product with total in main window and stockEvents when clicked
     return (
         <div 

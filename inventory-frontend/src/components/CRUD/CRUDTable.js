@@ -51,9 +51,9 @@ export const CRUDTable = ({columns, url, url2, prod_id}) => {
         }
 
         return () => {
-        controller.abort();
+            controller.abort();
         };
-    }, []);
+    }, [url,url2]);
 
     //Create a new item
     const handleCreate = async event => {
