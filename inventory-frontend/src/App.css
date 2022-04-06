@@ -37,44 +37,68 @@
   background-color: #FAF9F6;
 }
 
-.CRUDProduct{
+/* 
+=================
+TableT
+=====================
+*/
+
+.table_container {
   max-width: 1400px;
-  margin: auto;
-  padding: 0px 24px;
+  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-ul{
-  list-style-type: none;
-  padding: 0;
+.table {
+  width: 100%;
+  border-spacing: 0;
 }
 
-li{
-  padding: 6px 12px;
-  border-bottom: 1px solid slategrey;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+caption {
+  font-style: italic;
+  font-size: 90%;
+  margin-bottom: 10px;
 }
 
-span > button{
-  margin-left: 4px;
+.table th {
+  background: #fff;
+  padding: 8px 10px;
+  border-bottom: 1px solid #198754;
+  font-weight: bold;
+  text-align: left;
 }
 
-.create-product-form{
-  margin-left: 32px;
+.table th.up {
+  background-image: url("./images/up_arrow.png");
+}
+.table th.down {
+  background-image: url("./images/down_arrow.png");
+}
+.table th.default {
+  background-image: url("./images/default.png");
+}
+th.up,
+th.default,
+th.down {
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center right;
 }
 
-.create-product-button{
-  margin-left: 32px;
+.table td {
+  border-top: 1px solid #198754;
+  padding: 8px 20px;
 }
 
-.CRUDStockEvent{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.table tbody tr:first-child td {
+  border-top: none;
 }
 
-.se-table{
-  margin: 2rem
+.table tbody tr:nth-child(n) td {
+  background: #eff0f0;
+}
+
+.table tbody tr:nth-child(2n) td {
+  background: #fff;
 }

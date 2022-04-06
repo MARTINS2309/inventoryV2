@@ -4,9 +4,10 @@
 //There is a form to enter the details for creating and editing products.
 import React from "react";
 import { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
 import { fetchData } from "./utils";
 import  TableT  from "./Table/Table";
+import ModalCrUpDel from "./Modal/ModalCrUpDel";
+import ModalAlert from "./Modal/ModalAlert";
 
 export const CRUDProduct = () => {
     const [products, setProducts] = useState([]);
@@ -18,7 +19,7 @@ export const CRUDProduct = () => {
     const [alertType, setAlertType] = useState("");
 
     const columns = [
-        { label: "id", accessor: "id", sortable: true },
+        { label: "Id", accessor: "id", sortable: true },
         { label: "Name", accessor: "name", sortable: true },
         { label: "Created At", accessor: "created_at", sortable: true },
         { label: "Updated At", accessor: "updated_at", sortable: true },
@@ -144,23 +145,23 @@ export const CRUDProduct = () => {
 
     //Show form to create a new product
     const handleShowCreate = () => {
-        setShow(true);
-        setShowDelete(false);
         setProduct({});
+        setShowDelete(false);
+        setShow(true);
     }
 
     //Show form to update a product
     const handleShowUpdate = product => {
-        setShow(true);
-        setShowDelete(false);
         setProduct(product);
+        setShowDelete(false);
+        setShow(true);
     }
 
     //Show form to delete a product
     const handleShowDelete = product => {
-        setShow(true);
-        setShowDelete(true);
         setProduct(product);
+        setShowDelete(true);
+        setShow(true);
     }
 
     //pass the alert and display it
@@ -180,43 +181,36 @@ export const CRUDProduct = () => {
         setAlertType("");      
     }
 
-    console.log('products', products)
     return (
         <div className="CRUDProduct">
             <div className="p-table">
-                <TableT columns={columns} caption={"Product"} data={products} handleShowUpdate={handleShowUpdate} handleShowDelete={handleShowDelete} item={product} handleShowCreate={handleShowCreate} />
+                <TableT 
+                    columns={columns}
+                    data={products}
+                    caption={"Product"}
+                    handleShowUpdate={handleShowUpdate}
+                    handleShowDelete={handleShowDelete}
+                    handleShowCreate={handleShowCreate}
+                />
             </div>
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{showDelete ? "Delete product" : product.id ? "Edit product" : "Create product"}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={showDelete ? handleDelete : product.id ? handleUpdate : handleCreate}>
-                        {showDelete ?(
-                            <div className="form-group">
-                                 <p>Are you sure you want to delete {product.name}?</p>
-                            </div>) : ( 
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <input type="text" className="form-control" id="name" name="name" defaultValue={product.name} />
-                            </div>)
-                        }
-                        <div className="form-buttons">
-                            <button type="submit" className={showDelete ? "btn btn-danger" : "btn btn-primary"}>{showDelete ? "Delete" : product.id ? "Update" : "Create"}</button>
-                        </div>
-                    </form>
-                </Modal.Body>
-            </Modal>
+            <ModalCrUpDel 
+                show={show}
+                showDelete={showDelete}
+                handleClose={handleClose}
+                handleDelete={handleDelete}
+                handleUpdate={handleUpdate}
+                handleCreate={handleCreate}
+                item={product}
+                item_type={"Product"}
+            />
 
-            <Modal show={showAlert} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{alertType}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>{alertMessage}</p>
-                </Modal.Body>
-            </Modal>
+            <ModalAlert 
+                showAlert={showAlert}
+                handleClose={handleClose}
+                alertType={alertType}
+                alertMessage={alertMessage}
+            />
         </div>
     );
 }

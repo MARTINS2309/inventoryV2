@@ -7,13 +7,15 @@ import { useState, useEffect } from "react";
 import { fetchData } from "./utils";
 import { Modal } from "react-bootstrap";
 import  TableT  from "./Table/Table";
+import ModalCrUpDel from "./Modal/ModalCrUpDel";
+import ModalAlert from "./Modal/ModalAlert";
 
 export const CRUDStockEvent = () => {
     const [stockevents, setStockevents] = useState([]);
     const [products, setProducts] = useState([]);
     const [stockevent, setStockevent] = useState({});
     const [showDelete, setShowDelete] = useState(false);
-    const [showCreEd, setShowCreEd] = useState(false);
+    const [show, setShow] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("");
@@ -152,6 +154,27 @@ export const CRUDStockEvent = () => {
         }
     }
     
+    //Show the modal to create a new stockevent
+    const handleShowCreate = () => {
+        setStockevent({});
+        setShowDelete(false);
+        setShow(true);
+    }
+
+    //Show the modal to edit a stockevent
+    const handleShowUpdate = stockevent => {
+        setStockevent(stockevent);
+        setShowDelete(false);
+        setShow(true);
+    }
+
+    //Show the modal to delete a stockevent
+    const handleShowDelete = stockevent => {
+        setStockevent(stockevent);
+        setShowDelete(true);
+        setShow(true);
+    }
+
     //pass the alert and display it
     const handleAlert = (message, type) => {
         setAlertMessage(message);
@@ -159,34 +182,15 @@ export const CRUDStockEvent = () => {
         setShowAlert(true);
     }
 
-    //Show the form to create a new stockevent
-    const handleShowCreate = () => {
-        setStockevent({});
-        setShowCreEd(true);
-    }
-
-    //Show the form to edit a stockevent
-    const handleShowUpdate = stockevent => {
-        setStockevent(stockevent);
-        setShowCreEd(true);
-    }
-
-    //Show the form to delete a stockevent
-    const handleShowDelete = stockevent => {
-        setStockevent(stockevent);
-        setShowDelete(true);
-    }
-
-    //Close the form
+    //Close the Modal and clear the state
     const handleClose = () => {
         setShowDelete(false);
-        setShowCreEd(false);
+        setShow(false);
         setShowAlert(false);
         setStockevent({});
         setAlertMessage("");
         setAlertType("");      
     }
-
 
     return (
         <div className="CRUDStockEvent">
@@ -201,59 +205,24 @@ export const CRUDStockEvent = () => {
                 />
             </div>
 
+            <ModalCrUpDel
+                show={show}
+                showDelete={showDelete}
+                handleClose={handleClose}
+                handleDelete={handleDelete}
+                handleUpdate={handleUpdate}
+                handleCreate={handleCreate}
+                item={stockevent}
+                item_type={"Stock Event"}
+                items={products}
+            />
 
-            <Modal show={showCreEd} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{ stockevent.id ? "Update" : "Create"} Stockevent</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={stockevent.id ? handleUpdate : handleCreate }>
-                        <div className="form-group">
-                            <label>Type</label>
-                            <select defaultValue={stockevent.type} name="type">
-                                <option value="add">ADD</option>
-                                <option value="remove">REMOVE</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label>Qty</label>
-                            <input type="number" className="form-control" name="qty" defaultValue={stockevent.qty} />
-                        </div>
-                        <div className="form-group">
-                            <label>Product ID</label>
-                            <select defaultValue={stockevent.product_id} name="product_id">
-                                {products.map(product => (
-                                    <option key={product.id} value={product.id}>{product.name}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <button type="submit" className="btn btn-primary">
-                            { stockevent.id ? "Update" : "Create"}
-                        </button>
-                    </form>
-                </Modal.Body>
-            </Modal>
-
-            <Modal show={showDelete} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Delete Stockevent</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Are you sure you want to delete this Stockevent?</p>
-                    <button className="btn btn-danger" onClick={handleDelete}>
-                        Delete
-                    </button>
-                </Modal.Body>
-            </Modal>
-
-            <Modal show={showAlert} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{alertType}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>{alertMessage}</p>
-                </Modal.Body>
-            </Modal>
+            <ModalAlert 
+                show={showAlert}
+                handleClose={handleClose}
+                alertType={alertType}
+                alertMessage={alertMessage}
+            />
         </div>
     );
 }

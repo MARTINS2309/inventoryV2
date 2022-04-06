@@ -82,7 +82,7 @@ router
                 console.log('error', error)
             })
 
-        console.log('DELETE - ' + req.body.name)
+        console.log('DELETE - ' + req.params.id)
     })
 
 

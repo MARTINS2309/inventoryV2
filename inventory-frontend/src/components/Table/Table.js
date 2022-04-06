@@ -25,7 +25,7 @@ const TableT = ({columns, data, caption, handleShowUpdate, handleShowDelete , ha
     }
   };
   return (
-    <div>
+    <div className="table_container">
       <table className="table">
         <caption>
             {caption}s Table
