@@ -5,13 +5,11 @@ const db = require("../db")
 
 const sampleProduct= { 
     data: [{
-      id: 1,
-      attributes:{
+        id: 1,
         name: "App connected",
         createdAt:	"2022-02-18T10:47:49.151Z",
         updatedAt:	"2022-02-18T10:58:40.866Z",
-        publishedAt:	"2022-02-18T10:58:40.865Z", 
-      }
+        publishedAt:	"2022-02-18T10:58:40.865Z"
     }]
 }
 
@@ -23,6 +21,7 @@ router.get('/', (req, res) => {
             res.json(rows)
         })
         .catch(error =>{
+            res.sendStatus(500)
             console.log('error', error)
         })
 
@@ -31,38 +30,65 @@ router.get('/', (req, res) => {
 
 // create a POST route for new Product
 router.post('/', (req, res) => {
-    res.send('Create product');
-    console.log('Create product')
+    db
+        .any("INSERT INTO products (name, created_at, updated_at, published_at) VALUES (${name}, ${created_at}, ${updated_at}, ${published_at}) RETURNING id, name, created_at, updated_at, published_at", req.body)
+        .then(rows => {
+            res.json(rows)
+        })
+        .catch(error =>{
+            res.sendStatus(500)
+            console.log('error', error)
+        })
+     
+    console.log('POST product - ' + req.body.name)
 });
 
 // create route to cover all by id request
 router
     .route('/:id')
     .get((req, res) => {
-        res.send({ 
-            data: {
-            id: parseInt(req.params.id),
-            attributes:{
-                name: "Product "+req.params.id,
-                createdAt:	"2022-02-18T10:47:49.151Z",
-                updatedAt:	"2022-02-18T10:58:40.866Z",
-                publishedAt:	"2022-02-18T10:58:40.865Z", 
-            }
-            }
-        });
+        db
+            .any(`SELECT id, name, created_at, updated_at, published_at FROM products WHERE id= ${req.params.id};`)
+            .then(rows => {
+                res.json(rows)
+            })
+            .catch(error =>{
+                console.log('error', error)
+            })
+
+        console.log('GET product by id - ' + req.params.id)
     })
     .put((req, res) => {
-        res.send('update product '+req.params.id);
+        db
+            .any(`UPDATE products SET name= '${req.body.name}', updated_at= '${req.body.updated_at}' WHERE id= ${req.params.id} RETURNING id, name, created_at, updated_at, published_at;`)
+            .then(rows => {
+                res.json(rows)
+            })
+            .catch(error =>{
+                res.sendStatus(500)
+                console.log('error', error)
+            })
+
+        console.log('PUT - ' + req.body.name)
     })
     .delete((req, res) => {
-        res.send('delete product '+req.params.id);
-});
+        db
+            .none(`DELETE FROM products WHERE id= ${req.params.id};`)
+            .then(() => {
+                res.sendStatus(200)
+            })
+            .catch(error =>{
+                res.sendStatus(500)
+                console.log('error', error)
+            })
+
+        console.log('DELETE - ' + req.params.id)
+    })
+
 
 router.param("id", (req, res, next, id) => {
-    console.log(id)
+    console.log(`product id:${id}`)
     next()
 })
-
-
 
 module.exports = router

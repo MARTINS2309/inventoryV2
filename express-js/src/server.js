@@ -3,10 +3,8 @@ const cors = require('cors')
 const port =  3001;
 
 const app = express()
-
+//setting up json() processing
 app.use(express.json())
-
-const db = require('./db')
 
 //setting up cors as middleware
 app.use(cors());
@@ -19,7 +17,5 @@ app.use('/api/products', productsRouter)
 app.use('/api/stockevents', stockRouter)
 
 
-// This displays message that the server running and listening to specified port
+// Starts server on port and displays message that the server is running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-

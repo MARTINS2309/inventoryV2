@@ -1,8 +1,23 @@
 import React, { useState } from 'react'
+import { CRUDTable } from './CRUD/CRUDTable';
 
-export const StockDetail = ({name, total, stockEvents}) => {
+export const StockDetail = ({name, total, stockEvents, id}) => {
     //use state show to determine if stockEvents are displayed
     const [show, setShow] = useState(false);
+
+
+    const columnsStockEvent = [
+        { label: "id", accessor: "id", sortable: true },
+        { label: "Product", accessor: "product_id", sortable: true },
+        { label: "Type", accessor: "type", sortable: true },
+        { label: "Quantity", accessor: "qty", sortable: true },
+        { label: "Created At", accessor: "created_at", sortable: true },
+        { label: "Updated At", accessor: "updated_at", sortable: true },
+        { label: "Published At", accessor: "published_at", sortable: true }
+    ];
+
+    const url = "products";
+    const url2 = "stockevents";
 
     //map stock events displaying desired info
     const listStockEvents = (stockEvents ?? []).map(stockEvent => (
@@ -12,9 +27,9 @@ export const StockDetail = ({name, total, stockEvents}) => {
             key={'s'+stockEvent.id}
         >
             <p data-testid="p-id">ID: {stockEvent.id}</p>
-            <p data-testid="p-type">TYPE: {stockEvent.attributes.type}</p>
-            <p data-testid="p-qty">QUANTITY: {stockEvent.attributes.qty}</p>
-            <p data-testid="p-time">TIMESTAMP: {stockEvent.attributes.publishedAt}</p>
+            <p data-testid="p-type">TYPE: {stockEvent.type}</p>
+            <p data-testid="p-qty">QUANTITY: {stockEvent.qty}</p>
+            <p data-testid="p-time">TIMESTAMP: {stockEvent.published_at}</p>
         </div>
     ))
 
@@ -34,7 +49,12 @@ export const StockDetail = ({name, total, stockEvents}) => {
             
             {show &&
                 <div className="StockDetail_Body" data-testid="stock-detail-body">
-                    {listStockEvents}
+                         <CRUDTable
+                            columns={columnsStockEvent}
+                            url={url2}
+                            url2={url}
+                            prod_id={id}
+                        />
                 </div>
             }
 
