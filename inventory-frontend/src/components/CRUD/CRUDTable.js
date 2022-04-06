@@ -8,7 +8,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchData } from "../utils";
-import TableT from "../Table/Table";
+import TableT from "../Table/TableT";
 import ModalCrUpDel from "../Modal/ModalCrUpDel";
 import ModalAlert from "../Modal/ModalAlert";
 
@@ -231,7 +231,6 @@ export const CRUDTable = ({columns, url, url2, prod_id}) => {
                     handleShowUpdate={handleShowUpdate}
                     handleShowDelete={handleShowDelete}
                     handleShowCreate={handleShowCreate}
-                    handleShowExpand={true}
                 />
             </div>
 
