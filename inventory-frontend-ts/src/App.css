@@ -1,11 +1,16 @@
+/*
+Root and vars
+*/
 :root {
   --min-screen-height: 1000px;
+
   --navigation-bg-color: aqua;
   --sidebar-bg-color: aliceblue;
   --leftmenu-bg-color: skyblue;
   --content-bg-color: blanchedalmond;
   --rightmenu-bg-color: coral;
 }
+
 
 .App{
   margin: 0 auto;
@@ -47,6 +52,10 @@
   background-color: var(--rightmenu-bg-color);
 }
 
+
+/*
+Media Queries
+*/
 @media screen and (orientation: portrait) {
   .App{
     grid-template-columns:1fr;
