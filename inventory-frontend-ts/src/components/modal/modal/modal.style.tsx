@@ -2,12 +2,21 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
 	position: fixed;
-	top: 50%;
+	min-width: 550px;
+	top: 4.5em;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%);
 	z-index: 700;
 	width: inherit;
 	outline: 0;
+
+	@media screen and (orientation: portrait) {
+		min-width: 60px;
+		left: 0.5em;
+		right: 0.5em;
+		top: 3.5em;
+		transform: translate(0%);
+	}
 `;
 
 export const Backdrop = styled.div`

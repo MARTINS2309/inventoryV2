@@ -13,33 +13,36 @@ import {
 } from "./modal.style";
 
 export interface ModalProps {
-  isShown: boolean;
+  isOpen: boolean;
   hide: () => void;
+  headerBtn?: boolean;
   modalContent: JSX.Element;
   headerText: string;
 }
 
 export const Modal: FunctionComponent<ModalProps> = ({
-  isShown,
+  isOpen,
   hide,
+  headerBtn = true,
   modalContent,
   headerText
 }) => {
   const onKeyDown = (event: KeyboardEvent) => {
-    if (event.keyCode === 27 && isShown) {
+    if (event.code === 'Escape' && isOpen) {
+      event.preventDefault();
       hide();
     }
   };
 
   useEffect(() => {
-    isShown
+    isOpen
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
     document.addEventListener("keydown", onKeyDown, false);
     return () => {
       document.removeEventListener("keydown", onKeyDown, false);
     };
-  }, [isShown]);
+  });
 
   const modal = (
     <React.Fragment>
@@ -54,7 +57,9 @@ export const Modal: FunctionComponent<ModalProps> = ({
           <StyledModal>
             <Header>
               <HeaderText>{headerText}</HeaderText>
-              <CloseButton onClick={hide}>X</CloseButton>
+              {headerBtn && (
+                <CloseButton onClick={hide}>X</CloseButton>
+              )}
             </Header>
             <Content>{modalContent}</Content>
           </StyledModal>
@@ -63,5 +68,5 @@ export const Modal: FunctionComponent<ModalProps> = ({
     </React.Fragment>
   );
 
-  return isShown ? ReactDOM.createPortal(modal, document.body) : null;
+  return isOpen ? ReactDOM.createPortal(modal, document.body) : null;
 };
