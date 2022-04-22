@@ -30,13 +30,12 @@ const Nav = () => {
             <Modal
                 isOpen={isOpen}
                 hide={onClickToggle}
-                headerText='Profile'
                 headerBtn={false}
                 modalContent={
                     <SideBarMenus/>
                 }
             />
-            <nav className="navigation">
+            <nav>
                 {getMobileMenu()}
                 <strong>InventoryMangment</strong>
             </nav>

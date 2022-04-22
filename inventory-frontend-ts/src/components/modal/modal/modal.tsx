@@ -15,17 +15,17 @@ import {
 export interface ModalProps {
   isOpen: boolean;
   hide: () => void;
-  headerBtn?: boolean;
   modalContent: JSX.Element;
-  headerText: string;
+  headerBtn?: boolean;
+  headerText?: string;
 }
 
 export const Modal: FunctionComponent<ModalProps> = ({
   isOpen,
   hide,
-  headerBtn = true,
   modalContent,
-  headerText
+  headerBtn = true,
+  headerText = ""
 }) => {
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.code === 'Escape' && isOpen) {
