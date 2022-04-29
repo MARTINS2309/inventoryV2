@@ -37,6 +37,7 @@ Global
 /*
 Modal Forms
 */
+/*input styles*/
 input[type="text"],
 input[type="password"],
 select {
@@ -63,7 +64,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #45a049;
 }
-
+/*button styles*/
 .action-btn {
   background-color: skyblue;
   color: white;
@@ -108,24 +109,24 @@ input[type="submit"]:hover {
 /*
 Main
 */
+/*header*/
 .title-bar {
   margin-bottom: 0.4em;
   padding-bottom: 0.25em !important;
   border-bottom: 3px solid var(--input-border-color);
 }
-
+/*panel*/
 .panel {
   display: flex;
   flex-direction: row;
   border: solid var(--panel-border-thickness) var(--border-color);
   border-radius: 0.07em;
   background-color: var(--panel-color);
-
-  white-space: wrap;
+  white-space: pre-line;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+/*panel icons*/
 .icon-lg {
   margin-left: 0.5em;
   width: 2.23em;
@@ -161,6 +162,7 @@ hr {
 Media Queries
 */
 @media screen and (orientation: portrait) {
+  /*modal*/
   .form-buttons {
     grid-template-columns: 1fr;
   }
@@ -174,7 +176,7 @@ Media Queries
     margin-left: 0.5em;
     padding-top: 0.5em;
   }
-
+  /*global*/
   .App{
     grid-template-columns:1fr;
     grid-template-areas:

@@ -19,7 +19,7 @@ const ThreadCard: FC<ThreadCardProps> = ({ thread }) => {
     };
 
     const getPoints = (thread: Thread) => {
-        if (width > 768) {
+        if (width <= 768) {
             return (
                 <label
                     style={{
@@ -42,7 +42,7 @@ const ThreadCard: FC<ThreadCardProps> = ({ thread }) => {
     };
 
     const getResponses = (thread: Thread) => {
-        if (width > 768) {
+        if (width <= 768) {
             return (
                 <label
                     style={{

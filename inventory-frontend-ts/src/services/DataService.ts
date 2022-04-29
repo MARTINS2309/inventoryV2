@@ -18,7 +18,7 @@ export async function getCategories(): Promise<Array<Category>> {
       categories.push(travel);
 
       res(categories);
-    }, 2000);
+    }, 1000);
   });
   return promise;
 }
@@ -81,7 +81,7 @@ export async function getThreadsByCategory(
       });
 
       res(threads);
-    }, 2000);
+    }, 1000);
   });
   return promise;
 }
@@ -185,7 +185,7 @@ export async function getThreadById(Id: string): Promise<Thread> {
       };
 
       res(thread);
-    }, 2000);
+    }, 1000);
   });
   return promise;
 }
@@ -246,7 +246,7 @@ export async function getUserThreads(id: string): Promise<Array<Thread>> {
       });
 
       res(threads);
-    }, 2000);
+    }, 1000);
   });
   return result;
 }
