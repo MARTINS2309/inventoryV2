@@ -35,7 +35,7 @@ const Nav = () => {
                     <SideBarMenus/>
                 }
             />
-            <nav>
+            <nav className="nav">
                 {getMobileMenu()}
                 <strong>InventoryMangment</strong>
             </nav>

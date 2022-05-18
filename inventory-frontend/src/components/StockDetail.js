@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CRUDTable } from './CRUD/CRUDTable';
 
-export const StockDetail = ({name, total, stockEvents, id}) => {
+export const StockDetail = ({name, total, id}) => {
     //use state show to determine if stockEvents are displayed
     const [show, setShow] = useState(false);
 
