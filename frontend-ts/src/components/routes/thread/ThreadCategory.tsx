@@ -1,11 +1,13 @@
 import React, { FC } from "react";
+import DropDown, { Option } from "react-dropdown";
+import "react-dropdown/style.css";
 
 interface ThreadCategoryProps {
   categoryName?: string;
 }
 
 const ThreadCategory: FC<ThreadCategoryProps> = ({ categoryName }) => {
-  const catOptions: Array<string | any > = [
+  const catOptions: Array<string | Option> = [
     {
       value: "1",
       label: "Programming",
@@ -16,25 +18,20 @@ const ThreadCategory: FC<ThreadCategoryProps> = ({ categoryName }) => {
     },
   ];
   const defaultOption = catOptions[0];
-  const onChangeDropDown = (e: string) => {
-    console.log(e);
+  const onChangeDropDown = (arg: Option) => {
+    console.log(arg);
   };
 
   return (
     <div className="thread-category-container">
       <strong>{categoryName}</strong>
-      <select
+      <DropDown
         className="thread-category-dropdown"
-        id="thread-category-dropdown"
-        onChange={(e) => onChangeDropDown(e.target.value)}
-        defaultValue={defaultOption}
-      >
-        {catOptions.map((cat) => (
-          <option key={cat.value} value={cat.value}>
-            {cat.label}
-          </option>
-        ))}
-      </select>
+        options={catOptions}
+        onChange={onChangeDropDown}
+        value={defaultOption}
+        placeholder="Select a category"
+      />
     </div>
   );
 };

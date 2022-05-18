@@ -17,7 +17,7 @@ const Thread = () => {
 
   useEffect(() => {
     console.log("Thread id", id);
-    if (id && Number(id) > 0) {
+    if (id && id > 0) {
       getThreadById(id).then((th) => {
         setThread(th);
       });

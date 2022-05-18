@@ -8,7 +8,6 @@ import "./Home.css";
 
 const Home: FC = () => {
   return (
-    <React.Fragment>
     <div className="screen-root-container home-container">
       <div className="navigation">
         <Nav />
@@ -18,7 +17,6 @@ const Home: FC = () => {
       <Main />
       <RightMenu />
     </div>
-    </React.Fragment>
   );
 };
 

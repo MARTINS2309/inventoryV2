@@ -1,26 +1,27 @@
 import React, { FC } from "react";
-import { Modal } from "../modal/modal/modal";
-import { ModalProps } from "../types/ModalProps";
+import ReactModal from "react-modal";
+import ModalProps from "../types/ModalProps";
 import "./Logout.css";
 
 const Logout: FC<ModalProps> = ({ isOpen, onClickToggle }) => {
 
     const onClickLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        onClickToggle();
+        onClickToggle(e);
     };
 
     const onClickCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        onClickToggle();
+        onClickToggle(e);
     };
 
     return (
-        <Modal
+        <ReactModal
+            className="modal-menu"
             isOpen={isOpen}
-            hide={onClickToggle}
-            headerText="Logout"
-            modalContent={
-                <form>
+            onRequestClose={onClickToggle}
+            shouldCloseOnOverlayClick={true}
+        >
+            <form>
                 <div className="logout-inputs">
                     Are you sure you want to logout?
                 </div>
@@ -31,7 +32,7 @@ const Logout: FC<ModalProps> = ({ isOpen, onClickToggle }) => {
                             className="action-btn"
                             onClick={onClickLogin}
                         >
-                        Logout
+                        Login
                         </button>
                         <button
                             style={{ marginLeft: ".5em" }}
@@ -43,8 +44,7 @@ const Logout: FC<ModalProps> = ({ isOpen, onClickToggle }) => {
                     </div>
                 </div>
             </form>
-            }
-        />
+        </ReactModal>
     )
 }
 

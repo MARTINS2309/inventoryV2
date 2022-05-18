@@ -1,14 +1,5 @@
-/*
-Root and vars
-*/
 :root {
   --min-screen-height: 1000px;
-
-  --navigation-bg-color: aqua;
-  --sidebar-bg-color: aliceblue;
-  --leftmenu-bg-color: skyblue;
-  --content-bg-color: blanchedalmond;
-  --rightmenu-bg-color: coral;
 
   --border-color: gray;
   --border: solid 0.1em var(--border-color);
@@ -24,9 +15,7 @@ Root and vars
   --sm-font-size: 0.95em;
   --sm-med-font-size: 1.1em;
 }
-/*
-Global
-*/
+
 .screen-root-container {
   margin: 0 auto;
   max-width: 1200px;
@@ -34,10 +23,20 @@ Global
   border: var(--border);
   border-radius: 0.3em;
 }
-/*
-Modal Forms
-*/
-/*input styles*/
+
+.modal-menu {
+  position: fixed;
+  min-width: 550px;
+  left: 50%;
+  top: 4.5em;
+  transform: translate(-50%);
+  border: var(--border);
+  border-radius: 5px;
+  background-color: white;
+  padding: 1em 1em 1em 1em;
+  z-index: 1000;
+}
+
 input[type="text"],
 input[type="password"],
 select {
@@ -64,7 +63,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #45a049;
 }
-/*button styles*/
+
 .action-btn {
   background-color: skyblue;
   color: white;
@@ -106,27 +105,24 @@ input[type="submit"]:hover {
   padding-top: 0.8em;
 }
 
-/*
-Main
-*/
-/*header*/
 .title-bar {
   margin-bottom: 0.4em;
   padding-bottom: 0.25em !important;
   border-bottom: 3px solid var(--input-border-color);
 }
-/*panel*/
+
 .panel {
   display: flex;
   flex-direction: row;
   border: solid var(--panel-border-thickness) var(--border-color);
   border-radius: 0.07em;
   background-color: var(--panel-color);
-  white-space: pre-line;
+
+  white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/*panel icons*/
+
 .icon-lg {
   margin-left: 0.5em;
   width: 2.23em;
@@ -158,11 +154,7 @@ hr {
   border: solid 2px var(--section-divider-color);
 }
 
-/*
-Media Queries
-*/
-@media screen and (orientation: portrait) {
-  /*modal*/
+@media screen and (orientation: portrait) and (max-width: 768px) {
   .form-buttons {
     grid-template-columns: 1fr;
   }
@@ -176,11 +168,19 @@ Media Queries
     margin-left: 0.5em;
     padding-top: 0.5em;
   }
-  /*global*/
-  .App{
-    grid-template-columns:1fr;
+
+  .App {
+    grid-template-columns: 1fr;
     grid-template-areas:
       "nav"
       "content";
+  }
+
+  .modal-menu {
+    min-width: 60px;
+    left: 0.5em;
+    right: 0.5em;
+    top: 3.5em;
+    transform: translate(0%);
   }
 }

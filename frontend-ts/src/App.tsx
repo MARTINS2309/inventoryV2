@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./components/routes/Home";
 import Thread from "./components/routes/thread/Thread";
 import UserProfile from "./components/routes/userProfile/UserProfile";
@@ -21,13 +21,17 @@ function App() {
     });
   }, [dispatch]);
 
+  const renderHome = (props: any) => <Home {...props} />;
+  const renderThread = (props: any) => <Thread {...props} />;
+  const renderUserProfile = (props: any) => <UserProfile {...props} />;
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/categorythreads/:categoryId" element={< Home />} />
-      <Route path="/thread/:id" element={<Thread />} />
-      <Route path="/userprofile/:id" element={<UserProfile />} />
-    </Routes>
+    <Switch>
+      <Route exact={true} path="/" render={renderHome} />
+      <Route path="/categorythreads/:categoryId" render={renderHome} />
+      <Route path="/thread/:id" render={renderThread} />
+      <Route path="/userprofile/:id" render={renderUserProfile} />
+    </Switch>
   );
 }
 

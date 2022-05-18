@@ -1,17 +1,24 @@
 {
   "compilerOptions": {
+    "target": "esnext",
     "esModuleInterop": true,
     "jsx": "react",
     "module": "esnext",
     "moduleResolution": "node",
     "lib": [
       "dom",
+      "dom.iterable",
       "esnext"
     ],
+    "allowJs": true,
+    "skipLibCheck": true,
     "strict": true,
-    "sourceMap": true,
-    "target": "esnext",
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules"
   ],

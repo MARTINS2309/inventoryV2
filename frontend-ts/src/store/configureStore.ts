@@ -1,9 +1,8 @@
 import { createStore } from "redux";
-import { devToolsEnhancer } from "redux-devtools-extension";
 import { rootReducer } from "./AppState";
 
 const configureStore = () => {
-  return createStore(rootReducer, {}, devToolsEnhancer({}));
+  return createStore(rootReducer, {});
 };
 
 export default configureStore;
