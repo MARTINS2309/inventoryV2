@@ -55,7 +55,7 @@ export const StockEventsTable = () => {
   // pass each (product details, quantity and relevant stockEvents) to stock detail
   return (
     <div className="StockEventTable" data-testid="s-e-t">
-      {fetchedProducts.map((product) => {
+      {(fetchedProducts ?? []).map((product) => {
         const { id } = product;
 
         const relevantStockEvents = fetchedStockEvents.filter(
